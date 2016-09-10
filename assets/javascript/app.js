@@ -15,38 +15,80 @@ $(document).ready( function() {
 	$articles = $('.article');
 
 
+	// converts an array to a string without commas between elements
+	function arrayToString(array){
+		var string = ""
+		for (i in array) {
+			string += array[i];
+		}
+		return string
+	};
+	
+	// change the name contained in the button to a string usable in the API query
+	function makeQuery(searchQuery){
+
+		var query = searchQuery.split("");
+
+		for( var i = 0; i < query.length; i++){
+
+			if(query[i] == " "){
+				query[i] = "+"; // replace spaces with '+'
+			};
+		};
+
+		return arrayToString(query);
+	};
+
+
 	function getArticles(){
 
-		var search = $searchInput.val().trim();
-		var numberOfRecords = $numberOfRecords.val().trim();
-		var startYear = $startYear.val().trim();
-		var endYear = $endYear.val().trim();
+		var search = $searchInput.val().trim()
+
+		var numberOfRecords = $numberOfRecords.val()
+		var startYear = $startYear.val()
+		var endYear = $endYear.val()
 		var key = '0260f164192d4233819b35680fc7cc00'
-		var queryURL = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=' + search + '?begin_date=' 
-		+ startYear + '?end_date=' + endYear '&sort=oldest&api-key=' + key;
+		var queryURL = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=' + search + '&sort=oldest&api-key=' + key;
+
+		// + '&begin_date=' + startYear + '&end_date=' + endYear + 
+
+		console.log(queryURL)
 
 		$.ajax({url: queryURL, method: 'GET'}).done(function(response) {
 
 			console.log(response)
+			console.log(response.response.docs.length)
 
-			for(i=0; i < response.docs.length; i++){
+			for( i=0; i < response.response.docs.length; i++){
+
+				console.log("looping")
+				// create elements
 				var $article = $('<div>');
-				$article.setClass('article');
+				$article.attr('class', 'article');
 
-				var $title = $('<div>');
-				$title.setClass('articleTitle');
+				var $title = $('<div>').text(response.response.docs[i].headline.main);
+				$title.attr('class','articleTitle');
 
-				var $author = $('<div>');
-				$author.setClass('author');
+				console.log($title)
 
-				var $section = $('<div>');
-				$section.setClass('section');
+				// var $author = $('<div>').text(response.response.docs[i].byline.original);
+				// $author.attr('class','author');
 
-				var $date = $('<div>');
-				$date.setClass = ('date');
+				var $section = $('<div>').text(response.response.docs[i].section_name);
+				$section.attr('class','section');
 
-				var $URL = $('<div>');
-				$URL = ('URL');
+				var $date = $('<div>').text(response.response.docs[i].pub_date);
+				$date.attr('class','date');
+
+				var $URL = $('<div>').text(response.response.docs[i].web_url);
+				$URL.attr('class','URL');
+
+				// APPEND!
+
+				$article.append($title, $section, $date, $URL);
+				$articleDiv.append($article);
+
+
 			}
 
 		})
@@ -55,10 +97,13 @@ $(document).ready( function() {
 	}
 
 
-
 	$searchButton.on('click', function(){
 
+		console.log('search pressed')
+
 		getArticles();
+
+		return false;
 
 
 	});

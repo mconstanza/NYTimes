@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>NY Times App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel='stylesheet' href='assets/css/style.css'>
+</head>
+
+<body>
+    <div class='container'>
+        <div class="jumbotron">
+            <h1><span class="glyphicon glyphicon-book iconRotate" aria-hidden="true"></span> New York Times Search</h1>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Search Parameters</h3>
+            </div>
+            <div class="panel-body">
+                <form id="searchForm">
+                    <label for='searchInput'>Search Terms:</label><br>
+                    <input type='text' id='searchInput'>
+                    <br>
+                    <label for='numberOfRecords'>Number of Records to Retrieve:</label><br>
+                    <input type='text' id='numberOfRecords'>
+                    <br>
+                    <label for='startYear'>Start Year(Optional):</label><br>
+                    <input type='text' id='startYear'>
+                    <br>
+                    <label for='endYear'>End Year(Optional):</label><br>
+                    <input type='text' id='endYear'>
+                    <br>
+                    <button id='searchButton'><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</button>
+                    <button id='clearButton'><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Clear Results</button>
+                </form>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> Top Articles</h3>
+            </div>
+            <div class="panel-body articles" id='articleDiv'>
+            </div>
+        </div>
+         <script src="https://code.jquery.com/jquery.js"></script>
+         <script type="text/javascript" src="assets/javascript/app.js"></script>
+</body>
+
+</html>
